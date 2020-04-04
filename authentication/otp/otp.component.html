@@ -1,0 +1,119 @@
+<mat-card fxFlex="1 1 auto" class="mat-elevation-z0">
+	<mat-card-header>
+		<!-- <mat-icon mat-card-avatar>lock</mat-icon> -->
+		<mat-card-title class="title">Enter the OTP</mat-card-title>
+		<mat-card-subtitle class="subtitle"
+			>Enter the OTP sent to: +91{{ no }}
+		</mat-card-subtitle>
+	</mat-card-header>
+
+	<mat-card-content>
+		<form fxLayout="row wrap" fxLayoutGap="5%">
+			<mat-form-field fxFlex="0 0 12%">
+				<input
+					matInput
+					[formControl]="digit1"
+					#digit1el
+					type="tel"
+					autocomplete="off"
+					pattern="\d*"
+					(keyup)="onKey($event, 1)"
+					maxlength="1"
+				/>
+			</mat-form-field>
+			<mat-form-field fxFlex="0 0 12%">
+				<input
+					matInput
+					[formControl]="digit2"
+					#digit2el
+					type="tel"
+					autocomplete="off"
+					pattern="\d"
+					maxlength="1"
+					(keyup)="onKey($event, 2)"
+				/>
+			</mat-form-field>
+			<mat-form-field fxFlex="0 0 12%">
+				<input
+					matInput
+					[formControl]="digit3"
+					#digit3el
+					type="tel"
+					autocomplete="off"
+					pattern="\d"
+					maxlength="1"
+					(keyup)="onKey($event, 3)"
+				/>
+			</mat-form-field>
+			<mat-form-field fxFlex="0 0 12%">
+				<input
+					matInput
+					[formControl]="digit4"
+					#digit4el
+					type="tel"
+					autocomplete="off"
+					pattern="\d"
+					maxlength="1"
+					(keyup)="onKey($event, 4)"
+				/>
+			</mat-form-field>
+			<mat-form-field fxFlex="0 0 12%">
+				<input
+					matInput
+					[formControl]="digit5"
+					#digit5el
+					type="tel"
+					autocomplete="off"
+					pattern="\d"
+					maxlength="1"
+					(keyup)="onKey($event, 5)"
+				/>
+			</mat-form-field>
+			<mat-form-field fxFlex="0 0 12%">
+				<input
+					matInput
+					[formControl]="digit6"
+					#digit6el
+					type="tel"
+					autocomplete="off"
+					pattern="\d"
+					maxlength="1"
+					(keyup)="onKey($event, 6)"
+				/>
+			</mat-form-field>
+		</form>
+	</mat-card-content>
+	<div fxLayout="row" fxLayoutAlign="space-between">
+		<div>
+			<button
+				mat-button
+				class="resend-otp"
+				(click)="resend()"
+				[disabled]="(resendOtpCountDown$ | async) !== 0"
+				[class.disabled]="(resendOtpCountDown$ | async) !== 0"
+			>
+				Resend OTP
+			</button>
+		</div>
+
+		<div
+			class="resend-otp-timer"
+			*ngIf="(resendOtpCountDown$ | async) !== 0"
+			#time
+		>
+			{{ resendOtpCountDown$ | async | formatTime: "true" }}
+		</div>
+	</div>
+	<mat-card-actions>
+		<div fxFlex></div>
+		<button mat-themed-button class="atc-button" (click)="submit()">
+			<div fxFlex></div>
+			<div *ngIf="!(busy | async)">VERIFY AND PROCEED</div>
+			<mat-spinner *ngIf="busy | async" [diameter]="45"></mat-spinner>
+			<div fxFlex></div>
+		</button>
+		<div fxFlex></div>
+	</mat-card-actions>
+
+	<p *ngIf="errorMessage | async">{{ errorMessage | async }}</p>
+</mat-card>

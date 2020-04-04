@@ -1,0 +1,27 @@
+<div style="overflow: hidden;">
+	<div class="product-style-wrapper">
+		<ng-container *ngFor="let style of stylesData; let i = index">
+			<div fxLayout="column" fxLayoutAlign="center center">
+				<img
+					lazyLoad="{{ imageBaseUrl }}{{ style.image }}"
+					alt=""
+					[ngStyle]="{
+						border: style.active
+							? '2px solid #FF6C00'
+							: '2px solid #eee'
+					}"
+					class="product-style-image"
+				/>
+				<div
+					[ngStyle]="{
+						color: style.active ? '#FF6C00' : 'grey',
+						'font-weight': style.active ? '600' : '400'
+					}"
+					class="product-style-text"
+				>
+					<span>{{ style.text }}</span>
+				</div>
+			</div>
+		</ng-container>
+	</div>
+</div>
